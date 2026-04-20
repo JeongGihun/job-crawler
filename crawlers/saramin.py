@@ -1,7 +1,7 @@
 from playwright.async_api import Browser
 from .base import new_context
 
-URL = "https://www.saramin.co.kr/zf_user/search/recruit?searchword=¹é¿£µå+python&exp_cd=1&loc_mcd=101000&order=acc_recent&recruitPageCount=20"
+URL = "https://www.saramin.co.kr/zf_user/search/recruit?searchword=Â¹Ã©Â¿Â£ÂµÃ¥+python&exp_cd=1&loc_mcd=101000&order=acc_recent&recruitPageCount=20"
 
 async def crawl(browser: Browser) -> list[dict]:
     context = await new_context(browser)
@@ -31,7 +31,7 @@ async def crawl(browser: Browser) -> list[dict]:
             except Exception:
                 continue
     except Exception as e:
-        print(f"[saramin] ¿À·ù: {e}")
+        print(f"[wanted] error: {e}")
     finally:
         await context.close()
     return jobs
