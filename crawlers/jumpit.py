@@ -1,14 +1,14 @@
-ï»¿from playwright.async_api import Browser
+from playwright.async_api import Browser
 from .base import new_context
 
-URL = "https://jumpit.saramin.co.kr/positions?sort=createdAt&jobCategory=1&keyword=Python+ë°±ì—”ë“œ"
+URL = "https://jumpit.saramin.co.kr/positions?sort=createdAt&jobCategory=1&keyword=Python+¹é¿£µå"
 
 async def crawl(browser: Browser) -> list[dict]:
     context = await new_context(browser)
     page = await context.new_page()
     jobs = []
     try:
-        await page.goto(URL, wait_until="networkidle", timeout=30000)
+        await page.goto(URL, wait_until="domcontentloaded", timeout=30000)
         await page.wait_for_selector("div.position_card", timeout=15000)
         cards = await page.query_selector_all("div.position_card")
         for card in cards[:20]:
@@ -30,7 +30,7 @@ async def crawl(browser: Browser) -> list[dict]:
             except Exception:
                 continue
     except Exception as e:
-        print(f"[jumpit] ì˜¤ë¥˜: {e}")
+        print(f"[jumpit] ¿À·ù: {e}")
     finally:
         await context.close()
     return jobs

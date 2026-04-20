@@ -1,4 +1,4 @@
-ï»¿from playwright.async_api import Browser
+from playwright.async_api import Browser
 from .base import new_context
 
 URL = "https://www.wanted.co.kr/wdlist/518/899?country=kr&job_sort=job.latest_order&years=0&locations=seoul"
@@ -8,7 +8,7 @@ async def crawl(browser: Browser) -> list[dict]:
     page = await context.new_page()
     jobs = []
     try:
-        await page.goto(URL, wait_until="networkidle", timeout=30000)
+        await page.goto(URL, wait_until="domcontentloaded", timeout=30000)
         await page.wait_for_selector("li.JobCard_container__FqChn", timeout=15000)
         cards = await page.query_selector_all("li.JobCard_container__FqChn")
         for card in cards[:20]:
@@ -30,7 +30,7 @@ async def crawl(browser: Browser) -> list[dict]:
             except Exception:
                 continue
     except Exception as e:
-        print(f"[wanted] ì˜¤ë¥˜: {e}")
+        print(f"[wanted] ¿À·ù: {e}")
     finally:
         await context.close()
     return jobs
