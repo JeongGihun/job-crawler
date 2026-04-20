@@ -30,7 +30,7 @@ async def crawl(browser: Browser) -> list[dict]:
             except Exception:
                 continue
     except Exception as e:
-        print(f"[wanted] ¿À·ù: {e}")
+        print(f"[wanted] error: {e}")
     finally:
         await context.close()
     return jobs
