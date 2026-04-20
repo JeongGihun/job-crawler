@@ -1,4 +1,4 @@
-﻿name: Job Crawler
+name: Job Crawler
 
 on:
   schedule:
@@ -8,17 +8,14 @@ on:
 jobs:
   crawl:
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright/python:v1.44.0-jammy
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-          playwright install chromium
-          playwright install-deps chromium
+
+      - name: Install Python dependencies
+        run: pip install playwright==1.44.0 notion-client==2.2.1 python-dateutil==2.9.0
+
       - name: Run crawler
         env:
           NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
